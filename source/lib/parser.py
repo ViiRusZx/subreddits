@@ -1,10 +1,12 @@
 from datetime import datetime, timedelta
+
 from source.lib.config import reddit, start_time
 
 
 class Parser():
 
     def __init__(self, reddit = reddit, start_time = start_time) -> None:
+
         self.reddit = reddit
         self.start_time = start_time
 
@@ -19,9 +21,11 @@ class Parser():
                 authors_dict[author] += 1
             else:
                 authors_dict[author] = 1
+
         sorted_authors = dict(
                 sorted(authors_dict.items(), key = lambda item: item[1],
                        reverse = True))
+
         return sorted_authors
 
     def _top_commen_authors(self) -> dict:
@@ -33,14 +37,16 @@ class Parser():
             post.comments.replace_more(limit = None)
             if post_date >= start_date:
                 for comment in post.comments.list():
-                    author_name = str(comment.author)  # Получить имя автора комментария
+                    author_name = str(comment.author)
                     if author_name in comment_dict:
                         comment_dict[author_name] += 1
                     else:
                         comment_dict[author_name] = 1
+
         sorted_comments = dict(
                 sorted(comment_dict.items(), key = lambda item: item[1],
                        reverse = True))
+
         return sorted_comments
 
     def print_top_authors_in_posts(self) -> None:
